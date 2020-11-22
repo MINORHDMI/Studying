@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.example.mapper.AbnormalResignationMapper">
+    <resultMap id="AbnormalResignationResultMap" type="org.example.entity.AbnormalResignation">
+        <result column="id" property="id"/>
+        <result column="emp_id" property="empId" />
+        <result column="resign_data" property="resignData"/>
+        <result column="reason" property="reason"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <association property="employee" javaType="org.example.entity.Employee">
+            <result column="id1" property="id"></result>
+            <result column="emp_id1" property="empId"></result>
+            <result column="emp_name" property="empName"></result>
+            <result column="status" property="status"></result>
+        </association>
+    </resultMap>
+
+    <!--查询操作-->
+    <select id="findAll" resultMap="AbnormalResignationResultMap">
+        select * from abnormal_resignation ar, employee_information ei where ar.emp_id = ei.emp_id
+    </select>
+    <!--插入操作-->
+    <insert id="insertAbnormalResignation" parameterType="org.example.service.AbnormalResignationService">
+		insert into abnormal_resignation values(#{id},#{empId},#{resignData},#{reason},#{createBy},#{createTime},#{updateBy},#{updateTime})
+	</insert>
+    <!--修改操作-->
+    <update id="updateAbnormalResignation" parameterType="org.example.service.AbnormalResignationService">
+        update abnormal_resignation set emp_id=#{empId},resign_data=#{resignData},reason=#{reason},create_by=#{createBy},create_time=#{createTime},update_by=#{updateBy},update_time=#{updateTime} where id=#{id}
+    </update>
+    <!--删除操作-->
+    <delete id="deleteAbnormalResignation" parameterType="java.lang.Integer">
+        delete from abnormal_resignation where id=#{id}
+    </delete>
+
+
+
+    <!--根据id进行查询-->
+<!--    <select id="findById" parameterType="int" resultMap="EmployeeResultMap">-->
+<!--        select * from employee_information where id=#{id}-->
+<!--    </select>-->
+
+</mapper>
